@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="show">
+        
+      </div>
+    </div>
+    <script>
+      let datas=[
+        {"image":"https://i.ibb.co/cLV4RvX/google-pixel-3.jpg","RAM":["8 GB"],"ROM":["256 GB","128 GB","64 GB"],"name":"Pixel 3","brand":"Google","colors":["Blue","Black","White"]},
+        {"image":"https://i.ibb.co/160YSpk/mi-redmi-5.jpg","RAM":["6 GB","4 GB"],"ROM":["128 GB","64 GB"],"name":"Redmi 5","brand":"Xiaomi","colors":["Red","Gold","Black","White"]},
+        {"image":"https://i.ibb.co/y6dk6n1/mi-redmi-y2.jpg","RAM":["3 GB"],"ROM":["32 GB"],"name":"Redmi Y2","brand":"Xiaomi","colors":["Rose Gold","Gold","Black","White"]},
+        {"image":"https://i.ibb.co/McQMDF8/motorola-moto-e5-plus.jpg","RAM":["6 GB"],"ROM":["128 GB","64 GB"],"name":"Moto E5 Plus","brand":"Motorola","colors":["Grey","Black","Pink"]},
+        {"image":"https://i.ibb.co/1QGFW28/nokia-6-1.jpg","RAM":["6 GB"],"ROM":["128 GB"],"name":"6.1","brand":"Nokia","colors":["Grey","Black","Blue"]},
+        {"image":"https://i.ibb.co/vJbK6qM/realme-c1.jpg","RAM":["6 GB","4 GB","3 GB"],"ROM":["128 GB","64 GB"],"name":"C1","brand":"Realme","colors":["Red","Gold","Black","White","Grey"]},
+        {"image":"https://i.ibb.co/F6c80H6/realme-x.jpg","RAM":["4 GB","3 GB"],"ROM":["64 GB","32 GB"],"name":"X","brand":"Realme","colors":["Rose Gold","Gold","Black","White","Pink"]},
+        {"image":"https://i.ibb.co/TWLNRyW/samsung-galaxy-s10-plus.jpg","RAM":["6 GB","4 GB"],"ROM":["64 GB"],"name":"Galaxy S10","brand":"Samsung","colors":["Red","Gold","White"]},
+        {"image":"https://i.ibb.co/ScZsMtW/vivo-z1-pro.jpg","RAM":["8 GB","6 GB"],"ROM":["128 GB","64 GB"],"name":"Z1 Pro","brand":"Vivo","colors":["White","Deep Blue"]}
+      ];
+      let ramOption=["8 GB","6 GB","4 GB","3 GB","2 GB"]
+      let romOption=["256 GB","128 GB","64 GB","32 GB","16 GB"]
+      let colorsopt=["Rose Gold","Gold","Black","Grey","White","Red","Pink","Blue","Deep Blue"]
+      let brandsopt=["Google","Samsung","Oppo","Nokia","Xiaomi","Realme","Apple"];
+      let cartar=[];
+       let myproduct ={};
+       let editIndex=-1
+       let errors={};
+       function show(active){
+        let str=makeNavbar(active);
+        active === 1?str+=showMobile():str+=""
+        active === 2?str+=addMObile():str+=""
+        active === 3?str+=showCart():str+=""
+        document.getElementById("show").innerHTML=str
+      }
+      function showproduct(){
+        editIndex=-1
+        myproduct={}
+        show(1)
+      }function addproduct(){
+        show(2)
+      }
+      function cart(){
+        show(3)
+      }
+      function makeNavbar( active=0){
+        console.log(active)
+        let str ='<nav class="navbar navbar-expand-lg navbar-light bg-light">';
+        str+='<a class="navbar-brand" href="#">MobileStore</a>'
+        str+='<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">'
+        str+='<span class="navbar-toggler-icon"></span>';
+        str+='</button>';
+        str+='<div class="collapse navbar-collapse" id="navbarNavDropdown">';
+        str+='<ul class="navbar-nav">'
+        let active1= active==1?'active':'';
+        let active2= active==2?'active':'';
+         let active3= active==3?'active':'';
+        str+='<li class="nav-item " '+active1+'>'
+        str+='<a class="nav-link" onclick="showproduct()">Mobiles</a>'
+        str+='</li>'
+        str+='<li class="nav-item" '+active2+'>'
+        str+='<a class="nav-link" onclick="addproduct()">Add a Mobile</a>'
+        str+='</li>'
+        str+='<li class="nav-item" '+active3+'>'
+        str+='<a class="nav-link" onclick="cart()">Cart</a>'
+        str+='</li>'
+        str+='</ul>'
+        str+='</div>'
+        str+='</nav>'
+        return str;
+      }function showMobile(index){
+        let arr=datas.map((pr,index)=>{
+        let  {image,RAM,ROM,name,brand,colors}=pr;
+        let str='<div class="row border">'
+        str+='<div class="col-3" onclick="display('+index+')"><img src="'+image+' height="50px" width="50px"></div>';
+        str+='<div class="col-3">'+"Name:"+name+"<br>"+"Brand:"+brand+"<br>"+"Colors:"+colors+"<br>"+"RAM:"+RAM+"<br>"+"ROM:"+ROM+'</div>'
+        str+='</div>'
+        return str;
+        })
+        let str1='<div class="row border">'
+        str1+='<div class="col-6">'+arr.join('')+'</div>'
+        str1+='<div class="col-6 col-akas" id="akash"></div>'
+        str1+='</div>'
+        return str1;
+      }function display(index){
+        let str='<div class="text-center"><img src="'+datas[index].image+'" height="90%" width="200px"><br>'+datas[index].name+"from"+datas[index].brand+'</div>'
+        str+='<div class="row ">'
+        str+='<div class="col-4">'+makeDropdown('xy',ramOption,"Select RAM","","")+'</div>'
+        str+='<div class="col-4">'+makeDropdown('xy1',romOption,"Select ROM","","")+'</div>'
+        str+='<div class="col-4">'+makeDropdown('xy2',colorsopt,"Select color","","")+'</div>'
+        str+='</div>'
+        str+='<div class="text-center"><button class="btn btn-primary" onclick="addCart('+index+')">Add to cart</button></div>'
+         str+='<div class="text-center"><button class="btn btn-secondary" onclick="editmobile('+index+')">Edit Mobile</button></div>'
+       document.getElementById("akash").innerHTML=str;
+      }function addCart(index){
+        let RAM= document.getElementById("xy").value
+        let ROM= document.getElementById("xy1").value
+        let colors= document.getElementById("xy2").value
+        let pr={image:datas[index].image,name:datas[index].name,brand:datas[index].brand,colors:colors,RAM:RAM,ROM:ROM}
+        if(RAM==""||ROM==""||colors==""){
+          alertcode("Choose all the options before adding to cart")
+        }
+        else{
+          index>=0 ? cartar[index]=pr : datas.push(pr);
+          alertcode("Successfully added to cart")
+          cart();
+        }
+      }
+      function showCart(){
+        let arr1=cartar.map((pr,index)=>{
+          let arr={image,name,brand,colors,RAM,ROM}=pr;
+          let str='<div class="row border">'
+          str+='<div class="col-6"><img src="'+image+' height="50px" width="50px"></div>';
+          str+='<div class="col-6 text-center">'+name+"from"+brand+"<br>"+"Colors:"+colors+","+"RAM:"+RAM+","+"ROM:"+ROM+"<br>"+'<button class="btn btn-danger" onclick="remove('+index+')">Remove From Cart</button>'+'</div>'
+        str+='</div>'
+        return str;
+        })
+        return arr1.join(" ");
+      }function remove(index){
+        cartar.splice(index,1);
+        cart()
+      }function addMObile(){
+        let {image="",RAM=[],ROM=[],name="",brand="",colors=[]}=myproduct
+        let str=makeTextfield("name","Product Name","Enter product name",name,errors.name)
+        str+=makeTextfield("image","Product image","Enter URL of product image",image,errors.image)
+        str+=makeDropdown("brand",brandsopt,"Choose Brand",brand,errors.brand)
+        str+=makeCheckbox("ram",ramOption,RAM,"Choose RAM options",errors.ram)
+        str+=makeCheckbox("rom",romOption,ROM,"Choose ROM options",errors.rom)
+        str+=makeCheckbox("color",colorsopt,colors,"Choose color options",errors.colors)
+        str+='<br><button class="btn btn-primary" onclick="submitmobile()">Add Product</button>'
+        return str;
+
+      }function submitmobile(){
+        let image = document.getElementById("image").value
+        let name = document.getElementById("name").value
+        let brand= document.getElementById("brand").value
+        let box1= document.getElementsByName("ram")
+        let box2= document.getElementsByName("rom")
+        let box3= document.getElementsByName("color")
+        let RAM=[];
+        let ROM=[]
+        let colors=[];
+        for(let i=0;i<box1.length;i++)
+          if(box1[i].checked)
+            RAM.push(box1[i].value)
+        for(let i=0;i<box2.length;i++)
+          if(box2[i].checked)
+            ROM.push(box2[i].value)
+        for(let i=0;i<box3.length;i++)
+          if(box3[i].checked)
+            colors.push(box3[i].value)
+        let pr={"image":image,"RAM":RAM,"ROM":ROM,"name":name,"brand":brand,"colors":colors}
+        if(validates(pr)){
+          editIndex>=0 ? datas[editIndex]=pr: datas.push(pr);
+          showproduct()
+          display(datas.indexOf(pr))
+        }
+        else{
+         myproduct=pr;
+         addproduct();
+        }
+      }
+      function editmobile(index){
+        editIndex = index;
+        myproduct = datas[index]
+        addproduct()
+      }function validates(pr){
+        errors.name=pr.name?"":"Name is Mandatory"
+        errors.image= pr.image?'':'image is Mandatory'
+        errors.brand= pr.brand?'':"Brand is manadatory"
+        errors.ram= pr.RAM.length>=1?'':"At least 1 RAM option should be checked"
+        errors.rom= pr.ROM.length>=1?'':"At least 1 RAM option should be checked"
+        errors.colors= pr.colors.length>=2?'':"At least 2 color option should be checked"
+        return !(errors.image||errors.name||errors.brand||errors.ram||errors.rom||errors.colors)
+      }
+       function makeTextfield(id,label,placeholder,value='',err=""){
+        let str ='<div class="form-group">';
+        str+='<label>'+label+'</label>'
+        str+='<input type="text" class="form-control" id="'+id+'" placeholder ="'+placeholder+'" value="'+value+'">' 
+        str+='</div>'
+        str+=err ? '<span class="text-danger">'+err+'</span>':"";
+        return str;
+      }
+      function makeDropdown(id,options,header,selvalue='',err=""){
+        const arr1= options.map(opt=>{
+          let selcted =opt===selvalue?'selected':''
+          return '<option '+selcted+'>'+opt+'</option>'
+        })
+        let s1= '<div class="form-group">';
+        s1+='<select id="'+id+'" class="form-control">';
+        let selectedheader= selvalue?"":"selected";
+        s1+='<option value="" disabled '+selectedheader+'>'+header+'</option>'
+        s1+=arr1.join('')
+        s1+='</select>'
+        s1+='</div>'
+        s1+=err ? '<span class="text-danger">'+err+'</span>':"";
+        return s1;
+      }
+       function makeCheckbox(name,options,arr,label,err=""){
+        let arr1= options.map(opt=>{
+          let arr2=arr.find(st=>{
+            return opt==st
+          })
+            let c1=arr2?'checked':""
+            let str='<div class="form-check">';
+            str+='<input type="checkbox" value="'+opt+'"" name="'+name+'" class="form-check-input" id="'+opt+'" '+c1+'>';
+            str+='<label class="form-check-lebel">'+opt+'</label>';
+            str+='</div>'
+            return str;
+        })
+        let str='<label class="form-check-lebel">'+label+'</label>';
+        str+=arr1.join("")
+        str+=err ? '<span class="text-danger">'+err+"<br>"+'</span>':"";
+        return str;
+      }function alertcode(st){
+          alert(st)
+      }
+      show()
+    </script>
+  </body>
+</html>
